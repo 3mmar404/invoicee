@@ -99,11 +99,28 @@
             background: transparent;
             width: 100%;
             transition: 0.3s;
+            color: var(--dark-brown);
         }
         input:focus {
             outline: none;
             border-color: var(--copper);
             background-color: #fafafa;
+        }
+
+        /* تحسين مدخلات الأرقام وإلغاء الأسهم الجانبية المزعجة لتسهيل الكتابة */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            text-align: center;
+        }
+
+        /* منع تغير لون خلفية الحقول الحسابية عند الضغط عليها بالخطأ */
+        input[readonly]:focus {
+            background-color: transparent !important;
         }
 
         /* --- Invoice Info Section --- */
@@ -158,6 +175,7 @@
             font-size: 16px;
         }
         .desc-col { width: 40%; text-align: right; }
+        .desc-col input { text-align: right; }
         .qty-col { width: 15%; }
         .price-col { width: 20%; }
         .total-col { width: 25%; background-color: var(--light-bg); font-weight: bold;}
@@ -190,6 +208,12 @@
             padding: 10px;
             font-size: 16px;
             resize: none;
+            color: var(--dark-brown);
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--copper);
+            background-color: #fafafa;
         }
 
         .totals-section {
@@ -217,6 +241,13 @@
             font-weight: bold;
             border: none;
             border-bottom: 1px dashed var(--copper);
+            text-align: center;
+        }
+        
+        /* حل مشكلة تحول الحقل للأبيض واختفاء النص عند الضغط والتعديل */
+        .total-box input:focus {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            color: white !important;
         }
 
         .signatures {
@@ -232,7 +263,7 @@
             width: 40%;
         }
         .sig-box label { font-weight: bold; }
-        .sig-box input { border-bottom: 1px solid black; border-top:none; border-left:none; border-right:none; }
+        .sig-box input { border-bottom: 1px solid black; border-top:none; border-left:none; border-right:none; text-align: center; }
 
         .footer-text {
             text-align: center;
@@ -286,14 +317,12 @@
         </div>
 
         <div class="invoice-container">
-            <!-- Header -->
             <div class="header">
                 <div class="logo-section">
                     <h1><span>OWNER</span> BUILD</h1>
                     <p>للصيانة الشاملة</p>
                 </div>
                 
-                <!-- إضافة الباركود هنا -->
                 <div class="qr-section">
                     <img src="qr.png" alt="QR Code">
                 </div>
@@ -306,7 +335,6 @@
 
             <div class="invoice-title">فاتـــــورة صيانــــة</div>
 
-            <!-- Customer Info -->
             <div class="info-grid">
                 <div class="info-row">
                     <label>التاريخ :</label>
@@ -338,7 +366,6 @@
                 </div>
             </div>
 
-            <!-- Items Table -->
             <table>
                 <thead>
                     <tr>
@@ -349,7 +376,6 @@
                     </tr>
                 </thead>
                 <tbody id="items-body">
-                    <!-- Rows will be calculated via JS -->
                     <script>
                         for(let i=0; i<6; i++) {
                             document.write(`
@@ -365,7 +391,6 @@
                 </tbody>
             </table>
 
-            <!-- Notes & Warranty -->
             <div class="notes-section">
                 <div class="warranty-badge">
                     ضمان<br>
@@ -378,7 +403,6 @@
                 </div>
             </div>
 
-            <!-- Totals -->
             <div class="totals-section">
                 <div class="total-box">
                     <label>تكلفة المصنعية :</label>
@@ -390,7 +414,6 @@
                 </div>
             </div>
 
-            <!-- Signatures -->
             <div class="signatures">
                 <div class="sig-box">
                     <label>توقيع الفني :</label>
@@ -402,14 +425,12 @@
                 </div>
             </div>
 
-            <!-- Footer terms -->
             <div class="footer-text">
                 الضمان سارٍ لمدة 6 أشهر من تاريخ الفاتورة على قطع الغيار فقط من عيوب الصناعة
             </div>
         </div>
     </div>
 
-    <!-- JavaScript for Calculations -->
     <script>
         function calculateTotal() {
             let finalSum = 0;
